@@ -1,0 +1,2 @@
+-- Count
+SELECT COUNT(*) Total;
