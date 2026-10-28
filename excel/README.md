@@ -1,71 +1,104 @@
 # Excel Profiling: Bank Churn
 
-**Workbook:** `Bank_Churn_Profile.xlsx`
-**Source:** `data/raw/bank_churn.csv` (untouched; loaded via Data → From Text/CSV)
-**Date downloaded:** _fill in_
-**Rows:** ~10,000 (table `tblBank`)
+**Workbook:** `Bank_Churn_Profile.xlsx`  
+**Source:** `data/raw/bank_churn.csv`  
+**Date downloaded:** *Add your download date*  
+**Expected rows:** Approximately 10,000  
+**Excel table:** `tblBank`
+
+## Overview
+
+Excel was used to profile the Bank Customer Churn dataset, validate data quality, create customer segments, and explore churn patterns before proceeding to MySQL analysis and Python machine learning.
+
+The original dataset was kept unchanged and imported through **Data → From Text/CSV**.
 
 ## Sheets
 
 | Sheet | Purpose |
 |---|---|
-| `README` | Source, download date, what each sheet does |
-| `tblBank` (data sheet) | Raw data as an Excel Table with derived columns that auto-fill |
-| `DQ_Checks` | Data-quality formulas: row count, churn rate, blanks, zero balances, duplicate IDs, min/max, product-count sizes |
-| `Pivots` | Seven PivotTables (Average of Exited as %, plus Count of CustomerId) |
-| `Charts` | Column charts exported to `excel/images/` |
+| `README` | Dataset source, download date, and workbook documentation |
+| `tblBank` | Customer data stored in an Excel Table, including derived columns |
+| `DQ_Checks` | Row count, churn rate, blanks, zero balances, duplicate IDs, minimum and maximum values, and product-count checks |
+| `Pivots` | Seven PivotTables for customer segmentation and churn analysis |
+| `Charts` | Column charts created from selected PivotTables |
 
-## Derived columns and cut-offs
+## Derived Columns and Cut-offs
 
-| Column | Cut-offs | Note |
+| Column | Cut-offs / Logic | Purpose |
 |---|---|---|
-| AgeBand | <30, 30-39, 40-49, 50-59, 60+ | Bands make pivots readable |
-| HasZeroBalance | Balance = 0 → 1 | Zero-balance customers are a distinct group |
-| BalanceBand | Zero, 1-99K, 100K+ | My own cut-offs |
-| TenureBucket | 0-1, 2-4, 5-7, 8-10 years | Lifecycle view |
-| ProductsGroup | 1, 2, 3+ | Groups 3 and 4 are tiny, so merged to avoid noisy rates |
-| CreditBand | <580, 580-669, 670-739, 740+ | Common credit-tier convention, not a rule from the data |
+| `AgeBand` | Below 30, 30–39, 40–49, 50–59, 60+ | Compare churn across age groups |
+| `HasZeroBalance` | Balance = 0 → 1; otherwise 0 | Identify zero-balance customers |
+| `BalanceBand` | Zero, 1–99K, 100K+ | Compare balance segments |
+| `TenureBucket` | 0–1, 2–4, 5–7, 8–10 years | Explore customer tenure |
+| `ProductsGroup` | 1, 2, 3+ | Combine customers holding three or four products |
+| `CreditBand` | Below 580, 580–669, 670–739, 740+ | Compare credit-score segments |
 
-## Pivots
+The balance and credit-score cut-offs are analytical conventions. The product groups combine three or more products to reduce the impact of small segment sizes.
 
-Values are *Average of Exited* (formatted %) and *Count of CustomerId*.
+## PivotTable Analysis
 
-1. Churn by Geography
-2. Churn by Gender
-3. Churn by AgeBand
-4. Churn by ProductsGroup
-5. IsActiveMember × Geography (heat map)
-6. Balance held: Exited vs Sum of Balance
-7. BalanceBand
+The PivotTables use **Average of `Exited`**, formatted as a percentage, to calculate churn rates and **Count of `CustomerId`** to show segment sizes where applicable.
 
-## Charts
+1. **Churn by Geography** — compares churn across countries.
+2. **Churn by Gender** — compares churn between gender groups.
+3. **Churn by AgeBand** — examines age-related churn patterns.
+4. **Churn by ProductsGroup** — compares churn by number of products held.
+5. **IsActiveMember × Geography** — examines customer activity across countries using conditional formatting.
+6. **Balance Held** — compares the sum of customer balances by churn status.
+7. **BalanceBand** — compares customer balance groups.
 
-| File | Pivot |
-|---|---|
-| `images/churn_by_geography.png` | Churn by Geography |
-| `images/churn_by_ageband.png` | Churn by AgeBand |
-| `images/churn_by_product.png` | Churn by ProductsGroup (counts labelled) |
+## Key Visualizations
 
-![Churn by age band](images/churn_by_ageband.png)
+### 1. Churn by Geography
+
+Compares customer churn rates across geographical regions.
+
+![Churn by Geography](../images/churn_by_geography.png)
+
+### 2. Churn by AgeBand
+
+Shows churn rates across customer age groups.
+
+![Churn by AgeBand](../images/churn_by_ageband.png)
+
+### 3. Churn by ProductsGroup
+
+Compares churn across product-count groups, with customer counts labelled for context.
+
+![Churn by ProductsGroup](../images/churn_by_product.png)
 
 ## Verification
 
-- Each pivot's grand total equals the `DQ_Checks` churn rate.
-- Q1 in SQL and the pandas overall churn rate should match.
+- Confirm that the Excel row count matches the source CSV.
+- Check that customer IDs are unique.
+- Compare the overall churn rate with the SQL result and the Python result.
+- Verify that the PivotTable grand total for Average of `Exited` matches the overall churn rate.
+- Review customer counts alongside churn rates to avoid misleading conclusions from small groups.
+- Refresh PivotTables after changing the source data.
 
-## Findings (fill in after running)
+## Findings
 
-- Overall churn rate: _x%_
-- Highest-churn geography: _…_
-- Age band where churn starts climbing: _…_
-- Product-count pattern: _…_
-- Zero-balance share and its churn rate: _…_
+*Complete this section after validating the actual workbook results.*
 
-## Pitfalls avoided
+- **Overall churn rate:** Add calculated percentage.
+- **Highest-churn geography:** Add result.
+- **Age band where churn starts climbing:** Add result.
+- **Product-count pattern:** Add result.
+- **Zero-balance customer share and churn rate:** Add results.
 
-- Averaged the rate column, never summed it.
-- Read every rate beside its count.
-- Refreshed pivots after table changes.
-- Avoided `SUMPRODUCT(COUNTIF(range,range))` for duplicates (O(n²)).
+## Pitfalls Avoided
 
-> Excel was used to profile quickly and surface the zero-balance group and the small product-count groups before they could distort the model.
+- Used average churn rate instead of summing the `Exited` values in PivotTables.
+- Reviewed customer counts alongside churn rates.
+- Refreshed PivotTables after source changes.
+- Avoided `SUMPRODUCT(COUNTIF(range,range))` for duplicate checks because it can be slow on larger ranges.
+- Treated customer balances as account balances, not bank revenue.
+
+## Conclusion
+
+Excel provided an initial view of customer churn, customer segmentation, and data quality. These checks and visualizations establish a foundation for deeper SQL analysis and Python-based exploratory data analysis and machine learning.
+
+## Next Phase
+
+**MySQL — Data Loading, Data Quality, and Customer Churn Analysis**
+
