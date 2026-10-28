@@ -42,11 +42,11 @@ Values are *Average of Exited* (formatted %) and *Count of CustomerId*.
 
 | File | Pivot |
 |---|---|
-| `charts/churn_by_geography.png` | Churn by Geography |
-| `charts/churn_by_ageband.png` | Churn by AgeBand |
-| `charts/churn_by_product.png` | Churn by ProductsGroup (counts labelled) |
+| `images/churn_by_geography.png` | Churn by Geography |
+| `images/churn_by_ageband.png` | Churn by AgeBand |
+| `images/churn_by_product.png` | Churn by ProductsGroup (counts labelled) |
 
-![Churn by age band](charts/churn_by_ageband.png)
+![Churn by age band](images/churn_by_ageband.png)
 
 ## Verification
 
