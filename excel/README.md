@@ -1,6 +1,6 @@
 # Excel Profiling: Bank Churn
 
-**Workbook:** `Bank_Churn_Profile.xlsx`  
+**Workbook:** `Bank_churn_prediction.xlsx`  
 **Source:** `data/raw/bank_churn.csv`  
 **Date downloaded:** *Add your download date*  
 **Expected rows:** Approximately 10,000  
