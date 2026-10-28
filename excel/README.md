@@ -13,7 +13,7 @@
 | `tblBank` (data sheet) | Raw data as an Excel Table with derived columns that auto-fill |
 | `DQ_Checks` | Data-quality formulas: row count, churn rate, blanks, zero balances, duplicate IDs, min/max, product-count sizes |
 | `Pivots` | Seven PivotTables (Average of Exited as %, plus Count of CustomerId) |
-| `Charts` | Column charts exported to `excel/charts/` |
+| `Charts` | Column charts exported to `excel/images/` |
 
 ## Derived columns and cut-offs
 
