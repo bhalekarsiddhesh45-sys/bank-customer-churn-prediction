@@ -1,0 +1,9 @@
+metric,value,best_model
+ROC-AUC,0.8662,HistGB
+PR-AUC,0.7142,HistGB
+Precision,0.6,HistGB
+Recall,0.6486,HistGB
+F1,0.6234,HistGB
+Threshold,0.6153,HistGB
+Base rate (test),0.2035,HistGB
+Baseline accuracy (nobody churns),0.7963,HistGB
